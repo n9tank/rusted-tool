@@ -35,4 +35,4 @@ https://cra.lanzouf.com/b0ah1i1eh
 tool1*.apk
 
 github：
-https://github.com/n9tank/rused-tool
+https://github.com/n9tank/rusted-tool

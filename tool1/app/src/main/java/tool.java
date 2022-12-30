@@ -27,11 +27,8 @@ public class tool {
  static ByteBuffer ma;
  static byte bs[];
  static byte xm[];
- static byte xm2[];
  static byte med[];
- static byte med2[];
  static byte mst[];
- static byte mst2[];
  static int sq;
  static boolean lsm;
  static{
@@ -80,22 +77,16 @@ public class tool {
     sq = ism ?200: 8192;
    }
    key = "encode";
-   String encode;
    value = p.getProperty(key);
-   if (value != null) {
-    encode = value;
-   }else{
-    encode="utf-8";
+   if (value == null) {
+    value="utf-8";
    }
-  byte m[]="<map".getBytes(encode);
+  byte m[]="<map".getBytes(value);
   byte st[]=mst;
   if (!m.equals(st)) {
    mst = m;
-   mst2="MAP".getBytes(encode);
-   med = ">pam".getBytes(encode);
-   med2="PAM".getBytes(encode);
-   xm = "<?xm".getBytes(encode);
-   xm2="XM".getBytes(encode);
+   med = ">pam".getBytes(value);
+   xm = "<?xm".getBytes(value);
   }
  }catch(Exception e){
   String err=e.toString();
@@ -105,7 +96,7 @@ public class tool {
   str.append(value);
   str.append('\n');
   str.append(err);
-  return str.toString();
+  return e.toString();
  }
  return null;
  }
@@ -146,11 +137,9 @@ public class tool {
 	  ru = whex(f, b, rn);
 	  break rn;
 	 } catch (Exception e) {
-      e.printStackTrace();
 	  f.close();
 	 }
 	} catch (Exception e) {
-     e.printStackTrace();
 	}
 	ru = "失败";
 	break rn;
@@ -252,7 +241,6 @@ public class tool {
 	}
 	si = "完成";
    } catch (Exception e) {
-    e.printStackTrace();
 	si = "失败";
    }
    ou.close();
@@ -269,12 +257,8 @@ public class tool {
   if (sta == 1) {
    int st;
    byte s2[]=xm;
-   byte s3[]=xm2;
    byte b2=s2[0];
-   byte b3=b2;
-   k=s2.length;
-   p=k-s3.length;
-   k--;
+   k=s2.length-1;
    int e=0,len=0,v;
    wh:
    while (true) {
@@ -282,24 +266,16 @@ public class tool {
 	st = e;
     e=0;
 	do{
-     byte cm=br.get(st++);
-	 if (cm == b2||cm==b3) {
+	 if (br.get(st++) == b2) {
 	  if (e == k) {
 	   v= --st-k;
        len=br.getInt(v-4);
-       System.out.println(len);
-	   break wh;
+       break wh;
        }
 	  b2=s2[++e];
-      if(e>=p){
-      b3=s3[e-p];
-      }else{
-      b3=b2;
-      }
 	 } else if (e != 0) {
 	  e = 0;
 	  b2=s2[e];
-      b3=b2;
 	 }
 	}while(st < i);
 	if (i != 8192) {
@@ -339,13 +315,9 @@ public class tool {
    br.limit(8192);
   } else {
    byte st[]=mst;
-   byte st2[]=mst2;
    int pl=0;
    byte b2=st[pl];
-   byte b3=b2;
-   n = st.length;
-   ls=n-st2.length;
-   n--;
+   n = st.length-1;
    try {
 	tag: {
 	 wh:
@@ -356,21 +328,14 @@ public class tool {
 	  i = 0;
 	  br.position(i);
 	  do{
-       byte cm;
-	   if ((cm=br.get(i))== b2||cm==b3) {
+	   if (br.get(i)== b2) {
 		if (pl == n) {
 		 break wh;
          }
 		b2 = st[++pl];	
-        if(pl>=ls){
-         b3=st2[pl-ls];
-        }else{
-         b3=b2;
-        }
 	   } else if (pl != 0) {
 		pl = 0;
 		b2 = st[pl];
-        b3=b2;
 	   }
 	  }while(++i < k);
 	  if (k != 8192) {
@@ -399,27 +364,16 @@ public class tool {
 	 st = med;
 	 pl = 0;
 	 b2 = st[pl];
-     b3=b2;
-     st2=med2;
-     n = st.length;
-     ls=n-st2.length;
-     n--;
+     n = st.length-1;
 	 do{
-      byte cm;
-	  if ((cm=ou.get(--l))== b2||cm==b3) {
+	  if (ou.get(--l)== b2) {
 	   if (pl == n) {
 		break;
 	   }
 	   b2 = st[++pl];
-       if(pl>=ls){
-        b3=st2[pl-ls];
-       }else{
-        b3=b2;
-       }
 	  } else if (pl != 0) {
 	   pl = 0;
 	   b2 = st[pl];
-       b3=b2;
 	  }
 	 }while(l > 0);
 	 FileChannel out=new FileOutputStream(rn).getChannel();
