@@ -7,12 +7,6 @@ public class Main {
   Scanner in=new Scanner(System.in);
   PrintStream out=System.out;
   out.println(tool.lod());
-  /*HashMap m=new HashMap(8);
-   m.put("map",0);
-   m.put("tmx",1);
-   m.put("gz",2);
-   m.put("zip",3);
-   m.put("fzp",4);*/
   do{
    String s=in.nextLine();
    String l[]=s.split(" ", 2);
@@ -22,9 +16,6 @@ public class Main {
    switch (i) {
     case 107329:
      pr = tool.lod();
-     if (pr == null) {
-      pr = "加载完成";
-     }
      break;
     case 107868:
      i=0;

@@ -37,7 +37,7 @@ public class tool {
   b.limit(8192);
   bs = new byte[8192];
   eo = ByteBuffer.allocateDirect(1);
-  File ru=new File("sdcard/rustedWarfare");
+  File ru=new File("C:\rustedWarfare");
   hex = new File(ru, "hex");
   map = new File(ru, "maps");
  }
@@ -98,7 +98,7 @@ public class tool {
   str.append(err);
   return e.toString();
  }
- return null;
+ return "加载完成";
  }
  public static String ws(String pt, int b) {
   String ru;
