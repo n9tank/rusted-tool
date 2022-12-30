@@ -37,7 +37,7 @@ public class tool {
   b.limit(8192);
   bs = new byte[8192];
   eo = ByteBuffer.allocateDirect(1);
-  File ru=new File("C:\rustedWarfare");
+  File ru=new File("c:/rustedWarfare");
   hex = new File(ru, "hex");
   map = new File(ru, "maps");
  }
@@ -108,9 +108,9 @@ public class tool {
     return "文件异常";
    }
    if (b <= 2) {
-    int ls=pt.lastIndexOf('/');
     int sl=pt.length();
-    int l2=sl - 7;
+    int l2=sl-7;
+    int ls=pt.lastIndexOf(File.separator);
 	String ed;
     File rn;
 	if (b == 2) {
@@ -123,8 +123,8 @@ public class tool {
 	if (pt.charAt(l2) == '.') {
 	 sl = l2;
 	}
-	StringBuilder name=new StringBuilder(sl - ls + ed.length());
-	name.append(pt, ls, sl);
+	StringBuilder name=new StringBuilder(sl-ls+ed.length());
+	name.append(pt,ls,sl);
 	name.append(ed);
 	pt = name.toString();
     rn = new File(rn, pt);
