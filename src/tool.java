@@ -22,7 +22,7 @@ import net.lingala.zip4j.model.FileHeader;
 public class tool {
  final static ByteBuffer b;
  final static ByteBuffer eo;
- final static File hex;
+ static File hex;
  final static File map;
  static ByteBuffer ma;
  static byte bs[];
@@ -37,7 +37,11 @@ public class tool {
   b.limit(8192);
   bs = new byte[8192];
   eo = ByteBuffer.allocateDirect(1);
-  File ru=new File("c:/rustedWarfare");
+  String vm=System.getProperty("java.vm.name");
+  File ru;
+/*  if(vm.charAt(0)!='j'){
+   ru=new File("sdcard/rustedWarfare");
+  }else */ru=new File("c:/rustedWarfare");
   hex = new File(ru, "hex");
   map = new File(ru, "maps");
  }
@@ -108,9 +112,9 @@ public class tool {
     return "文件异常";
    }
    if (b <= 2) {
+    pt=r.getName();
     int sl=pt.length();
     int l2=sl-7;
-    int ls=pt.lastIndexOf(File.separator);
 	String ed;
     File rn;
 	if (b == 2) {
@@ -123,8 +127,8 @@ public class tool {
 	if (pt.charAt(l2) == '.') {
 	 sl = l2;
 	}
-	StringBuilder name=new StringBuilder(sl-ls+ed.length());
-	name.append(pt,ls,sl);
+	StringBuilder name=new StringBuilder(sl+ed.length());
+	name.append(pt,0,sl);
 	name.append(ed);
 	pt = name.toString();
     rn = new File(rn, pt);
@@ -137,11 +141,9 @@ public class tool {
 	  ru = whex(f, b, rn);
 	  break rn;
 	 } catch (Exception e) {
-      e.printStackTrace();
 	  f.close();
 	 }
 	} catch (Exception e) {
-     e.printStackTrace();
 	}
 	ru = "失败";
 	break rn;
@@ -243,7 +245,6 @@ public class tool {
 	}
 	si = "完成";
    } catch (Exception e) {
-    e.printStackTrace();
 	si = "失败";
    }
    ou.close();
