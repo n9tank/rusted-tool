@@ -7,8 +7,8 @@ android {
         applicationId "rust.tool1"
         minSdkVersion 13
         targetSdkVersion 28
-        versionCode 10
-        versionName "10"
+        versionCode 11
+        versionName "11"
     }
 
     buildTypes {
@@ -20,5 +20,5 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+implementation fileTree(dir: "libs", include: ["*.jar"])
 }

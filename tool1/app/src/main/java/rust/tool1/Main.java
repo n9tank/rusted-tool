@@ -1,5 +1,6 @@
 package rust.tool1;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import tool;
-import android.content.Context;
 public class Main extends Activity { 
 TextView t;
 Intent Intent;
@@ -29,12 +29,12 @@ public void finish(){
 moveTaskToBack(true);
 }
 protected void onCreate(Bundle savedInstanceState){
+super.onCreate(savedInstanceState);
 c=getApplicationContext();
 String s=tool.lod();
 if(s!=null){
  ms(s);
 }
-super.onCreate(savedInstanceState);
 setContentView(R.layout.activity_main);
 t=findViewById(R.id.t);
 Intent i=getIntent();
@@ -83,7 +83,7 @@ mpt=f;
 }
 }
 public void onActivityResult(int requestCode, int resultCode, Intent data){
-super.onActivityResult(requestCode, resultCode, data);
+super.onActivityResult(requestCode,resultCode,data);
 if(checkSelfPermission("android.permission.WRITE_EXTERNAL_STORAGE")==PackageManager.PERMISSION_GRANTED){
 Intent=null;
 }else startActivityForResult(Intent,0);

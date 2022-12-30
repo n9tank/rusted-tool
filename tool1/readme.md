@@ -8,7 +8,7 @@ gz 仅写出gzip
 非常快
 
 zip 使用zip打包的方式，处理zip伪文件夹
-非常慢
+快 zip4j
 
 fzp 处理zip伪文件夹（覆盖）
 很快 只能处理正常的zip文件
