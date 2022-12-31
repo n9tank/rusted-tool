@@ -22,8 +22,8 @@ import net.lingala.zip4j.model.FileHeader;
 public class tool {
  final static ByteBuffer b;
  final static ByteBuffer eo;
- static File hex;
- final static File map;
+public final static File hex;
+public  final static File map;
  static ByteBuffer ma;
  static byte bs[];
  static byte xm[];
@@ -37,17 +37,13 @@ public class tool {
   b.limit(8192);
   bs = new byte[8192];
   eo = ByteBuffer.allocateDirect(1);
-  String vm=System.getProperty("java.vm.name");
+ // String vm=System.getProperty("java.vm.name");
   File ru;
 /*  if(vm.charAt(0)!='j'){
    ru=new File("sdcard/rustedWarfare");
   }else */ru=new File("c:/rustedWarfare");
   hex = new File(ru, "hex");
   map = new File(ru, "maps");
- }
- public static void fmk() {
-  hex.mkdirs();
-  map.mkdirs();
  }
  public static String lod() {
   File lod=new File(hex, ".ini");

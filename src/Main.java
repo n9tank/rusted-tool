@@ -7,6 +7,8 @@ public class Main {
  public static void main(String arg[]) {
   Scanner in=new Scanner(System.in);
   PrintStream out=System.out;
+  tool.hex.mkdirs();
+  tool.map.mkdirs();
   out.println(tool.lod());
   do{
    String s=in.nextLine();
