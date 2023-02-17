@@ -96,7 +96,7 @@ public class tool {
   str.append(value);
   str.append('\n');
   str.append(err);
-  return e.toString();
+  return str.toString();
  }
  return null;
  }
@@ -137,11 +137,9 @@ public class tool {
 	  ru = whex(f, b, rn);
 	  break rn;
 	 } catch (Exception e) {
-      e.printStackTrace();
 	  f.close();
 	 }
 	} catch (Exception e) {
-     e.printStackTrace();
 	}
 	ru = "失败";
 	break rn;
@@ -243,7 +241,6 @@ public class tool {
 	}
 	si = "完成";
    } catch (Exception e) {
-    e.printStackTrace();
 	si = "失败";
    }
    ou.close();
@@ -467,7 +464,7 @@ public class tool {
  }
  public static String wzip(File f) {
   try {
-   ZipFile z=new ZipFile(new File("/sdcard/a"));
+   ZipFile z=new ZipFile(f);
    List<FileHeader> fhs=z.getFileHeaders();
    int i=fhs.size();
    int k=16;

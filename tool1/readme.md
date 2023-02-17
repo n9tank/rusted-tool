@@ -14,7 +14,7 @@ fzp 处理zip伪文件夹（覆盖）
 很快 只能处理正常的zip文件
 
 配置文件
-/sdcard/rustedWarfare/hex.ini
+/sdcard/rustedWarfare/hex/.ini
 
 searchSize=200
 lessRAM=T
