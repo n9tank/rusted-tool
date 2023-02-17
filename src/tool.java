@@ -96,7 +96,7 @@ public  final static File map;
   str.append(value);
   str.append('\n');
   str.append(err);
-  return e.toString();
+  return str.toString();
  }
  return "加载完成";
  }
@@ -464,7 +464,7 @@ public  final static File map;
  }
  public static String wzip(File f) {
   try {
-   ZipFile z=new ZipFile(new File("/sdcard/a"));
+   ZipFile z=new ZipFile(f);
    List<FileHeader> fhs=z.getFileHeaders();
    int i=fhs.size();
    int k=16;
