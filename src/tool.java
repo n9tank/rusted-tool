@@ -37,9 +37,9 @@ public  final static File map;
   b.limit(8192);
   bs = new byte[8192];
   eo = ByteBuffer.allocateDirect(1);
- // String vm=System.getProperty("java.vm.name");
+//  String vm=System.getProperty("java.vm.name");
   File ru;
-/*  if(vm.charAt(0)!='j'){
+ /* if(vm.charAt(0)!='j'){
    ru=new File("sdcard/rustedWarfare");
   }else */ru=new File("c:/rustedWarfare");
   hex = new File(ru, "hex");
@@ -235,7 +235,7 @@ public  final static File map;
 	if (p < n) {
 	 n -= p;
 	 ou.write(by,i, p);
-	 c.transferFrom(fc, p, n);
+	 fc.transferTo(p, n,c);
 	} else {
 	 ou.write(by,i, n);
 	}

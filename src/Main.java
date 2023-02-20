@@ -41,7 +41,9 @@ public class Main {
    }
    if(pr==null){
     if(l.length==2){
+     long j=System.nanoTime();
      pr=tool.ws(l[1],i);
+     System.out.println(System.nanoTime()-j);
     }else pr="no path";
    }
    out.println(pr);
