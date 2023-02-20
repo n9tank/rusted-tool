@@ -7,8 +7,8 @@ android {
         applicationId "rust.tool1"
         minSdkVersion 13
         targetSdkVersion 28
-        versionCode 11
-        versionName "11"
+        versionCode 12
+        versionName "12"
     }
 
     buildTypes {

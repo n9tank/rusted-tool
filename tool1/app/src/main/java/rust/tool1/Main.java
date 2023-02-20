@@ -89,7 +89,7 @@ Intent=null;
 }else startActivityForResult(Intent,0);
 }
 public void sw(View v){
-int b=v.getId()-0x7f040001;
+int b=v.getId()-0x7f010000;
 ms(tool.ws(mpt,b));
 }
 public void ld(View v){

@@ -235,7 +235,7 @@ public class tool {
 	if (p < n) {
 	 n -= p;
 	 ou.write(by,i, p);
-	 c.transferFrom(fc, p, n);
+	 fc.transferTo(p,n,c);
 	} else {
 	 ou.write(by,i, n);
 	}
