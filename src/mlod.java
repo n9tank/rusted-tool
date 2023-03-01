@@ -61,7 +61,7 @@ public class mlod{
       key=key.substring(0,i);
       String j=(String)k;
       if(conf.text(j)){
-       j=j.substring(3,j.length()-4);
+       j=j.substring(3,j.length()-3);
       }
       String li[]=j.split(",");
       Map buff=new HashMap();
