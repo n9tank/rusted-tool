@@ -15,14 +15,13 @@ public class mlod{
  }
  public static void lodF(File [] f,int l,Map m) throws Exception{
   int i=f.length;
-  Map mini=m;
-  while(--i>0){
+  while(--i>=0){
    File o=f[i];
    File fj[];
    if(o.isFile()||(fj=o.listFiles()).length==0){
     String pt=o.getPath();
     if(isloder(pt)){
-    mini.put(pt.substring(l),conf.lod(new FileReader(o)));
+    m.put(pt.substring(l),conf.lod(new FileReader(o)));
     }
    }else{
     lodF(fj,l,m);
@@ -34,7 +33,7 @@ public class mlod{
   int i=0;
   try{
   if (f.isDirectory()) {
-   lodF(f.listFiles(),f.getPath().length()-1,mini);
+   lodF(f.listFiles(),f.getPath().length()+1,mini);
   }else{
    ZipFile zip=new ZipFile(f);
    Enumeration<? extends ZipEntry> e=zip.entries();
@@ -65,7 +64,6 @@ public class mlod{
        j=j.substring(3,j.length()-4);
       }
       String li[]=j.split(",");
-      int n=li.length;
       Map buff=new HashMap();
       Map at=null;
       StringBuilder buf=new StringBuilder();
@@ -84,7 +82,8 @@ public class mlod{
       if(at!=null){
        conf.put(buff,at);
       }
-      while(--n>0){
+      i=li.length;
+      while(--i>=0){
        String s=li[i].trim();
        if(!s.startsWith("ROOT:")){
         s=key.concat(s);
