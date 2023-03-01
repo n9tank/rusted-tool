@@ -88,6 +88,8 @@ public class mlod{
        String s=li[i].trim();
        if(!s.startsWith("ROOT:")){
         s=key.concat(s);
+       }else{
+        s=s.substring(5);
        }
        conf.put(buff,(Map)mini.get(s));
        }
