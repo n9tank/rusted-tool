@@ -34,7 +34,7 @@ public class conf{
    f.close();
    }catch(Exception e){}
  }
- public static void put(Map f,Map table) {
+ public static void put(Map table,Map f) {
   Map mta=table;
   Iterator list=f.entrySet().iterator();
   while (list.hasNext()) {
