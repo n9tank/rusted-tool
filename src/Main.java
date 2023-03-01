@@ -7,8 +7,6 @@ public class Main {
  public static void main(String arg[]) {
   Scanner in=new Scanner(System.in);
   PrintStream out=System.out;
-  tool.hex.mkdirs();
-  tool.map.mkdirs();
   out.println(tool.lod());
   do{
    String s=in.nextLine();
@@ -41,9 +39,7 @@ public class Main {
    }
    if(pr==null){
     if(l.length==2){
-     long j=System.nanoTime();
      pr=tool.ws(l[1],i);
-     System.out.println(System.nanoTime()-j);
     }else pr="no path";
    }
    out.println(pr);

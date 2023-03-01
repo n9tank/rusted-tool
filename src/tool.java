@@ -46,7 +46,10 @@ public  final static File map;
   map = new File(ru, "maps");
  }
  public static String lod() {
-  File lod=new File(hex, ".ini");
+  File lod=hex;
+  lod.mkdirs();
+  tool.map.mkdirs();
+  lod=new File(hex, ".ini");
   Properties p=new Properties();
   if (lod.exists()) {
    try {
@@ -59,16 +62,11 @@ public  final static File map;
    } catch (Exception e) {
    }
   }
-  String key=null;
-  String value=null;
+  String key="lessRAM";
+  String value=p.getProperty(key);
+  boolean ism=!"F".equals(value);
+  lsm=ism;
   try {
-   key = "lessRAM";
-   value = p.getProperty(key);
-   boolean ism=true;
-   if (value != null) {
-    ism = value.equals('T');
-    lsm = ism;
-   }
    key = "searchSize";
    value = p.getProperty(key);
    if (value != null) {
