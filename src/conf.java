@@ -1,27 +1,34 @@
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.util.ArrayList;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.io.Reader;
+import java.util.HashSet;
 public class conf{
+ /*
+ public static HashSet set;
+ static{
+  set=new HashSet();
+  set.add("\"\"\"");
+  set.add("\'\'\'");
+ }*/
  public static void print(String s){
   System.out.println(s);
  }
- public static void write(BufferedWriter f,Map table){
+ public static void write(HashMap table,Writer w){
+  BufferedWriter f=new BufferedWriter(w);
   Iterator list=table.entrySet().iterator();
-  try{
-  while(list.hasNext()){
-   Map.Entry o=(Map.Entry)list.next();
+  try {
+   while (list.hasNext()) {
+   HashMap.Entry o=(HashMap.Entry)list.next();
    f.write('[');
    f.write((String)o.getKey());
    f.write("]\n");
-   Iterator m=((Map)o.getValue()).entrySet().iterator();
+   Iterator m=((HashMap)o.getValue()).entrySet().iterator();
    while(m.hasNext()){
-    Map.Entry j=(Map.Entry)m.next();
+    HashMap.Entry j=(HashMap.Entry)m.next();
     f.write((String)j.getKey());
     f.write(':');
     f.write((String)j.getValue());
@@ -34,39 +41,39 @@ public class conf{
    f.close();
    }catch(Exception e){}
  }
- public static void put(Map table,Map f) {
-  Map mta=table;
+ public static void put(HashMap table,HashMap f) {
+  HashMap mta=table;
   Iterator list=f.entrySet().iterator();
   while (list.hasNext()) {
-   Map.Entry o=(Map.Entry)list.next();
+   HashMap.Entry o=(HashMap.Entry)list.next();
    Object key=o.getKey();
-   Object map=o.getValue();
+   HashMap map=(HashMap)o.getValue();
    Object set=mta.get(key);
    if(set==null){
-    mta.put(key,map);
-   }else{
-    Map hash=(Map)map;
-    if(hash.get("@copyFrom_skipThisSection")!=true){
-     Map setM=(Map)set;
-     setM.putAll(hash);
+    mta.put(key,map.clone());
+   } else {
+    if(map.get("@copyFrom_skipThisSection")!=true){
+     HashMap setM=(HashMap)set;
+     setM.putAll(map);
     }
    }
   }
  }
  public static boolean text(String s){
+ // return set.contains(s.substring(s.length()-3));
   return s.startsWith("\"\"\"")||s.startsWith("\'\'\'");
  }
- public static Map lod(Reader re){
+ public static HashMap lod(Reader re){
   BufferedReader br=new BufferedReader(re);
-  Map table=new HashMap();
-   Map list=null;
+  HashMap table=new HashMap();
+   HashMap list=null;
    String s,key="";
    boolean skip=false;
    lod:{
    try{
    while((s=br.readLine())!=null){
    s=s.trim();
-   if(s.equals(""))continue;
+   if(s.length()==0)continue;
    if(s.charAt(0)=='#')continue;
    int i=s.length()-1;
    if(s.charAt(0)=='['&&s.charAt(i)==']'){

@@ -1,19 +1,17 @@
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 public class mlod{
  public static boolean isloder(String s){
   return s.endsWith(".ini")||s.endsWith(".template");
  }
- public static void lodF(File [] f,int l,Map m) throws Exception{
+ public static void lodF(File [] f,int l,HashMap m) throws Exception{
   int i=f.length;
   while(--i>=0){
    File o=f[i];
@@ -28,8 +26,8 @@ public class mlod{
    }
   }
  }
- public static Map<String,Map> lod(File f){
-  Map mini=new HashMap();
+ public static HashMap<String,HashMap> lod(File f){
+  HashMap mini=new HashMap();
   int i=0;
   try{
   if (f.isDirectory()) {
@@ -49,11 +47,11 @@ public class mlod{
   }
   Iterator list=mini.entrySet().iterator();
    while(list.hasNext()){
-    Map.Entry me=(Map.Entry)list.next();
-    Map m=(Map)me.getValue();
+    HashMap.Entry me=(HashMap.Entry)list.next();
+    HashMap m=(HashMap)me.getValue();
     Object o=m.get("core");
     if(o!=null) {
-     Map v=(Map)o;
+     HashMap v=(HashMap)o;
      Object k=v.get("copyFrom");
      if(k!=null){
       String key=(String)me.getKey();
@@ -64,8 +62,8 @@ public class mlod{
        j=j.substring(3,j.length()-3);
       }
       String li[]=j.split(",");
-      Map buff=new HashMap();
-      Map at=null;
+      HashMap buff=new HashMap();
+      HashMap at=null;
       StringBuilder buf=new StringBuilder();
       do{
       buf.append(key,0,i);
@@ -74,7 +72,7 @@ public class mlod{
       if(ac==null){
        i=key.lastIndexOf('/',i)+1;
       }else{
-       at=(Map)ac;
+       at=(HashMap)ac;
        break;
       }
       if(i==0)break;
@@ -90,9 +88,10 @@ public class mlod{
        }else{
         s=s.substring(5);
        }
-       conf.put(buff,(Map)mini.get(s));
+       conf.put(buff,(HashMap)mini.get(s));
        }
-       conf.put(m,buff);
+       conf.put(buff,m);
+       me.setValue(buff);
       } 
    }
   }
