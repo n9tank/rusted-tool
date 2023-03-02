@@ -2,6 +2,7 @@
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -55,8 +56,9 @@ public class mlod{
      Object k=v.get("copyFrom");
      if(k!=null){
       String key=(String)me.getKey();
-      i=key.lastIndexOf("/")+1;
-      key=key.substring(0,i);
+      //String pt=key;
+      i = key.lastIndexOf("/") + 1;
+      key = key.substring(0, i);
       String j=(String)k;
       if(conf.text(j)){
        j=j.substring(3,j.length()-3);
@@ -92,6 +94,9 @@ public class mlod{
        }
        conf.put(buff,m);
        me.setValue(buff);
+       /*if(pt.endsWith(".ini")){
+
+       }*/
       } 
    }
   }
