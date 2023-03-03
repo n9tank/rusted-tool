@@ -64,8 +64,7 @@ public class mlod{
        j=j.substring(3,j.length()-3);
       }
       String li[]=j.split(",");
-      HashMap buff=new HashMap();
-      HashMap at=null;
+      HashMap buff=new HashMap(m.size());
       StringBuilder buf=new StringBuilder();
       do{
       buf.append(key,0,i);
@@ -74,14 +73,12 @@ public class mlod{
       if(ac==null){
        i=key.lastIndexOf('/',i)+1;
       }else{
-       at=(HashMap)ac;
-       break;
+        HashMap at=(HashMap)ac;
+        conf.put(buff, at);
+        break;
       }
       if(i==0)break;
       }while(true);
-      if(at!=null){
-       conf.put(buff,at);
-      }
       i=li.length;
       while(--i>=0){
        String s=li[i].trim();

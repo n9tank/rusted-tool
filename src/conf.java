@@ -63,7 +63,7 @@ public class conf{
  // return set.contains(s.substring(s.length()-3));
   return s.startsWith("\"\"\"")||s.startsWith("\'\'\'");
  }
- public static HashMap lod(Reader re){
+ public static HashMap<String,String> lod(Reader re){
   BufferedReader br=new BufferedReader(re);
   HashMap table=new HashMap();
    HashMap list=null;
