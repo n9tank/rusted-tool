@@ -31,16 +31,24 @@ public class UnitsObj {
  return ((Method)c).invoke(null,s);
  }
  public static HashMap Filelds(String s){
-  HashMap id=new HashMap();
+  HashMap id;
   try {
    //.getClass() 或许更快
   Field[] ids=Class.forName(s).getFields();
-  int i=ids.length;
-  while(--i>=0){
-   Field v=ids[i];
+  int i=16;
+  int l=ids.length;
+  while(i<l){
+   i<<=1;
+   }
+   //i>>=1;
+  id=new HashMap(i);
+  while(--l>=0){
+   Field v=ids[l];
    id.put(v.getName(),v);
   }
-  }catch(Exception e){}
+  }catch(Exception e){
+   id=null;
+  }
   return id;
  }
  public void set(String s,String v) throws Exception{
