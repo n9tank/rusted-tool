@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 public class UnitsObj {
  static HashMap<String,Field> mid;
- static HashMap mtype;
  //反射写法
  public String name;
  public int price;
@@ -13,22 +12,19 @@ public class UnitsObj {
  public HashMap action;
  static{
  mid=Filelds("UnitsObj");
- HashMap type=new HashMap();
- Class str=String.class;
- try{
- type.put(Integer.TYPE,Integer.class.getMethod("valueOf",str));
- //..
- }catch(Exception e){
- }
- mtype=type;
  }
  public UnitsObj(){
   action=new HashMap();
  }
+ 
  public static Object valueof(String s,Class type) throws Exception{
-  Object c=mtype.get(type);
-  if(c==null)return null;
- return ((Method)c).invoke(null,s);
+  switch(type.hashCode()){
+   case 24957402:
+    return Integer.valueOf(s);
+    //..
+    default:
+    return s;
+  }
  }
  public static HashMap Filelds(String s){
   HashMap id;
@@ -57,16 +53,7 @@ public class UnitsObj {
    conf.print("can't find ".concat(s));
    return;
    }
-   Class c=i.getType();
-  /*
-   if(c==Integer.class){
-   set=Integer.valueOf(v);
-   }*/
-  if(c!=String.class){
-  i.set(this,valueof(v,c));
-  }else{
-  i.set(this,v);
-  }
+   i.set(this,valueof(v,i.getType()));
  }
  public void put(String s,String k,Object m) throws Exception{
   Field i=mid.get(s);
