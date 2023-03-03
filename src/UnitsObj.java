@@ -1,8 +1,10 @@
 //-keep class
-import java.util.HashMap;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.HashMap;
 public class UnitsObj {
  static HashMap<String,Field> mid;
+ static HashMap mtype;
  //反射写法
  public String name;
  public int price;
@@ -11,9 +13,22 @@ public class UnitsObj {
  public HashMap action;
  static{
  mid=Filelds("UnitsObj");
+ HashMap type=new HashMap();
+ Class str=String.class;
+ try{
+ type.put(Integer.TYPE,Integer.class.getMethod("valueOf",str));
+ //..
+ }catch(Exception e){
+ }
+ mtype=type;
  }
  public UnitsObj(){
   action=new HashMap();
+ }
+ public static Object valueof(String s,Class type) throws Exception{
+  Object c=mtype.get(type);
+  if(c==null)return null;
+ return ((Method)c).invoke(null,s);
  }
  public static HashMap Filelds(String s){
   HashMap id=new HashMap();
@@ -28,9 +43,16 @@ public class UnitsObj {
   }catch(Exception e){}
   return id;
  }
- public void set(String s,Object v) throws Exception{
+ public void set(String s,String v) throws Exception{
   Field i=mid.get(s);
-  if(i!=null)i.set(this,v);
+  Object set=valueof(v,i.getType());
+  /*
+  if(c==Integer.class){
+   set=Integer.valueOf(v);
+  }*/
+  
+  //..
+  if(i!=null)i.set(this,set);
  }
  public void put(String s,String k,Object m) throws Exception{
   Field i=mid.get(s);
