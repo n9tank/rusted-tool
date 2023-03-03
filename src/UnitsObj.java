@@ -53,14 +53,20 @@ public class UnitsObj {
  }
  public void set(String s,String v) throws Exception{
   Field i=mid.get(s);
-  Object set=valueof(v,i.getType());
+  if(i==null){
+   conf.print("can't find ".concat(s));
+   return;
+   }
+   Class c=i.getType();
   /*
-  if(c==Integer.class){
+   if(c==Integer.class){
    set=Integer.valueOf(v);
-  }*/
-  
-  //..
-  if(i!=null)i.set(this,set);
+   }*/
+  if(c!=String.class){
+  i.set(this,valueof(v,c));
+  }else{
+  i.set(this,v);
+  }
  }
  public void put(String s,String k,Object m) throws Exception{
   Field i=mid.get(s);
