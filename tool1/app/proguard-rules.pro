@@ -21,6 +21,6 @@
 #-renamesourcefileattribute SourceFile
 -optimizationpasses 7
 -dontpreverify
--keep class net.**{*;}
--dontwarn net.**
+#-keep class net.**{*;}
+#-dontwarn net.**
 

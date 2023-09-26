@@ -10,7 +10,7 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import tool;
+import rust.tool;
 public class Main extends Activity { 
 TextView t;
 Intent Intent;
