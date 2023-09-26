@@ -12,13 +12,12 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 import java.util.zip.GZIPInputStream;
 import net.lingala.zip4j.ZipFile;
-import java.util.List;
 import net.lingala.zip4j.model.FileHeader;
-import net.lingala.zip4j.model.ZipParameters;
-import java.util.HashMap;
 
 public class tool {
  final static ByteBuffer b;
@@ -432,7 +431,7 @@ public class tool {
      i += j + 1;
      byte c2=rw.get(i);
      if (size != 0 && (c2 == '/' || c2 == '\\')) {
-      rw.put(i, (byte)(c2+1));
+      rw.put(i, c2+=1);
      }
      i += size + k + 1;
      if (rw.get(i) == (byte)2) {
@@ -449,7 +448,7 @@ public class tool {
      i += 15 + j;
      byte c2=rw.get(i);
      if (size != 0 && (c2 == '/' || c2 == '\\')) {
-      rw.put(i, (byte)(c2+1));
+      rw.put(i, c2=+1);
      }
      i += k + 25;
     }while(i < fsize);
@@ -483,17 +482,15 @@ public class tool {
   int i=ha.size();
   while(--i>=0){
   FileHeader he=ha.get(i);
-  if((he.getCompressedSize()!=0||he.getUncompressedSize()!=0)){
+  if(he.isDirectory()&&(he.getCompressedSize()!=0||he.getUncompressedSize()!=0)){
+   he.setDirectory(false);
    String name=he.getFileName();
    int l=name.length();
-   if(l==0)continue;
    char c=name.charAt(--l);
-   if(c=='/'||c=='\\'){
-   he.setDirectory(false);
-   char b;
    String to;
    if(l>0){
    to=name.substring(0,l);
+   char b;
    if((b=name.charAt(--l))=='/'||b=='\\'){
    c+=1;
    to=to.concat(String.valueOf(c));
@@ -503,7 +500,6 @@ public class tool {
    }
    map.put(name,to);
    }
-  }
   }
   zip.renameFiles(map);
   ru="完成";
