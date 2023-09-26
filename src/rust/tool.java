@@ -1,6 +1,5 @@
 package rust;
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -13,13 +12,13 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
-import java.nio.channels.WritableByteChannel;
-import java.util.Enumeration;
 import java.util.Properties;
 import java.util.zip.GZIPInputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipOutputStream;
+import net.lingala.zip4j.ZipFile;
+import java.util.List;
+import net.lingala.zip4j.model.FileHeader;
+import net.lingala.zip4j.model.ZipParameters;
+import java.util.HashMap;
 
 public class tool {
  final static ByteBuffer b;
@@ -98,58 +97,45 @@ public class tool {
  }
  return "加载完成";
  }
- public static File check(File r,String pt,String ed){
-  int i=0;
-  String to=pt.concat(ed);
-  while(true){
-  File f=new File(r,to);
-  if(f.length()!=0){
-  to=new StringBuilder(pt).append("-").append(i++).append(ed).toString();
-  }else return f;
-  }
- }
  public static String ws(String pt, int b) {
   String ru;
-  rn: {
+  rn:{
    File r=new File(pt);
    if (r.length() == 0l) {
     return "文件异常";
    }
    File rn;
-   if(b<=3) {
+   if(b<=2) {
     pt=r.getName();
     String ed;
-    int s;
-    switch(b){
-    case 3:
-    ed=".zip";
-    rn=hex;
-    s=4;
-    break;
-    case 2:
+    if(b==2){
     ed=".gz";
-    s=7;
     rn=hex;
-    break;
-    default:
+    }else{
     ed=".tmx";
     rn=map;
-    s=7;
     }
     int sl=pt.length();
+    int s=7;
     if(sl>=s){
     int l2=sl-s;
-	if(pt.charAt(l2) == '.') {
+	if(pt.charAt(l2)=='.') {
 	pt=pt.substring(0,l2);
 	}
     }
-    rn =check(rn,pt,ed);
-    System.out.println(rn);
-    if(b!=3){
-	try {
+    String to=pt.concat(ed);
+    File ou;
+    int i=0;
+    while(true){
+    ou=new File(rn,to);
+    if(ou.length()!=0){
+    to=new StringBuilder(pt).append("-").append(i++).append(ed).toString();
+    }else break;
+    }
+	try{
 	 FileInputStream f=new FileInputStream(r);
 	 try {
-	  ru = whex(f, b, rn);
+	  ru=whex(f,b,ou);
 	  break rn;
 	 } catch (Exception e) {
 	  f.close();
@@ -157,9 +143,9 @@ public class tool {
 	} catch (Exception e) {
 	}
 	ru="失败";
-    }else{
-    ru=tool.wzip(r,rn);
-    }
+    break rn;
+    }else if(b==3){
+    ru=tool.wzip(r);
     break rn;
    }
    ru=tool.fzp(r);
@@ -487,61 +473,47 @@ public class tool {
   s |= (b.get(++i) & 0xff) << 16;
   return s |= (b.get(++i) & 0xff) << 24;
  }
- public static String wzip(File f,File ou) {
-  ByteBuffer by=b;
-  String ru="完成";
-  try{
+ public static String wzip(File f) {
   ZipFile zip=new ZipFile(f);
+  zip.setRunInThread(true);
+  String ru;
+  HashMap map=new HashMap();
   try{
-  ZipOutputStream out=new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(ou)));
-  WritableByteChannel wt=Channels.newChannel(out);
-  by.limit(8192);
-  out.setLevel(1);
-  Enumeration<? extends ZipEntry> en=zip.entries();
-  while(en.hasMoreElements()){
-  ZipEntry next=en.nextElement();
-  if(next.getSize()!=0||next.getCompressedSize()!=0){
-   String s=next.getName();
-   int l=s.length();
+  List<FileHeader> ha=zip.getFileHeaders();
+  int i=ha.size();
+  while(--i>=0){
+  FileHeader he=ha.get(i);
+  if((he.getCompressedSize()!=0||he.getUncompressedSize()!=0)){
+   String name=he.getFileName();
+   int l=name.length();
    if(l==0)continue;
-   char c=s.charAt(--l);
+   char c=name.charAt(--l);
    if(c=='/'||c=='\\'){
-    if(l>1){
-    s=s.substring(0,l);
-    c=s.charAt(--l);
-    if(c=='/'||c=='\\'){
-     s+=(char)(c+1);
-    }
-    }else s=String.valueOf((char)c+1);
-    ReadableByteChannel in=Channels.newChannel(zip.getInputStream(next));
-    try{
-    out.putNextEntry(new ZipEntry(s));
-    try{
-    while(in.read(by)!=-1){
-    by.flip();
-    wt.write(by);
-    by.flip();
-    }
-    }catch(Exception e){
-    by.position(0);
-    by.limit(8192);
-    }
-    out.closeEntry();
-    }catch(Exception e){
-    }
-    in.close();
+   he.setDirectory(false);
+   char b;
+   String to;
+   if(l>0){
+   to=name.substring(0,l);
+   if((b=name.charAt(--l))=='/'||b=='\\'){
+   c+=1;
+   to=to.concat(String.valueOf(c));
+   }}else{
+   c+=1;
+   to=String.valueOf(c);
+   }
+   map.put(name,to);
    }
   }
   }
-  wt.close();
+  zip.renameFiles(map);
+  ru="完成";
   }catch(Exception e){
   ru="失败";
   }
+  try{
   zip.close();
-  }catch (Exception e) {
-  ru="失败";
+  }catch(Exception e){
   }
-  by.clear();
   return ru;
  }
 }
