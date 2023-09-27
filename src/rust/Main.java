@@ -2,9 +2,6 @@ package rust;
 
 import java.io.PrintStream;
 import java.util.Scanner;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-import java.nio.channels.WritableByteChannel;
 
 public class Main {
  public static void main(String[] strArr) throws Exception {
