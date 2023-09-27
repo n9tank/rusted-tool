@@ -409,13 +409,12 @@ public class tool {
   ei.position(0);
  }
  public static String fzp(File f) {
-  try {
-   RandomAccessFile rf=new RandomAccessFile(f, "rw");
-   FileChannel c=rf.getChannel();
-   int fsize=(int)c.size();
+  try{
+   FileChannel rf=new RandomAccessFile(f, "rw").getChannel();
    String ru;
-   ByteBuffer rw=c.map(FileChannel.MapMode.READ_WRITE, 0, fsize);
-   try {
+   try{
+   int fsize=(int)rf.size();
+   ByteBuffer rw=rf.map(FileChannel.MapMode.READ_WRITE, 0, fsize);
     int i=2;
     do{
      int size,j,k;
@@ -455,7 +454,7 @@ public class tool {
    }
    rf.close();
    return ru;
-  } catch (Exception e) {
+  }catch (Exception e) {
   }
   return "失败";
  }
