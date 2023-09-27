@@ -154,7 +154,6 @@ public class tool {
  }
  public static String whex(FileInputStream f, int sta, File rn)throws Exception {
   ByteBuffer br=b;
-  FileChannel fc=f.getChannel();
   byte by[]=bs;
   int n,l=bs.length,ls=l;
   int k=sq;
@@ -182,6 +181,7 @@ public class tool {
   i --;
   p -= i;
   InputStream in=null;
+  FileChannel fc=f.getChannel();
   if (!ism || sta == 2 || sta == 0) {
    i -= 4;
    n = (by[i++] & 0xff) << 24;
@@ -238,6 +238,7 @@ public class tool {
    } catch (Exception e) {
 	si = "失败";
    }
+   c.close();
    fc.close();
    return si;
   }
@@ -399,6 +400,7 @@ public class tool {
   si="失败";
   }
   g.close();
+  fc.close();
   return si;
  }
  public static void setLen(FileChannel c, int i) throws Exception {

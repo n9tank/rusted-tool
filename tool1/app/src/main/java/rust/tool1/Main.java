@@ -45,12 +45,8 @@ requestPermissions(per,0);
 pe=per;
 s=null;
 }else s=tool.lod();
-}else{
-s=tool.lod();
-}
-if(s!=null){
-ms(s);
-}
+}else s=tool.lod();
+if(s!=null)ms(s);
 }
 public void onRequestPermissionsResult(int requestCode, String[] permissions,int[] grantResults){
 super.onRequestPermissionsResult(requestCode,permissions,grantResults);
