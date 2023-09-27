@@ -248,7 +248,10 @@ public class tool {
   }
   ReadableByteChannel g=Channels.newChannel(new GZIPInputStream(in));
   String si;
+  br.clear();
   br.limit(8192);
+  tag:
+  try{
   if (sta == 1) {
    int st;
    byte s2[]=xm;
@@ -281,14 +284,12 @@ public class tool {
 	 }
 	}while(st < i);
 	if (i != 8192) {
-	 br.clear();
-	 g.close();
-	 return "未找到";
+	si="未找到";
+    break tag;
 	}
     e+=4;
     n=i-e;
     br.clear();
-    br.position(0);
     ByteBuffer bo=br.asReadOnlyBuffer();
     bo.position(n);
     bo.limit(i);
@@ -309,18 +310,14 @@ public class tool {
     e3.printStackTrace();
 	si = "失败";
    }
-   br.clear();
    fc.close();
    c.close();
-   g.close();
   } else {
    byte st[]=mst;
    int pl=0;
    byte b2=st[pl];
    byte b3=b2;
    n = st.length-1;
-   try {
-	tag: {
 	 wh:
 	 do{
 	  k = g.read(br);
@@ -363,7 +360,6 @@ public class tool {
 	 br.position(i);
 	 br.limit(k);
 	 ou.put(br);
-	 br.clear();
 	 g.read(ou);
 	 st = med;
 	 pl = 0;
@@ -398,12 +394,11 @@ public class tool {
 	  si = "失败";
 	 }
 	 out.close();
-	}
-   } catch (Exception e2) {
-	si = "失败";
-   }
-   g.close();
   }
+  }catch(Exception e){
+  si="失败";
+  }
+  g.close();
   return si;
  }
  public static void setLen(FileChannel c, int i) throws Exception {
